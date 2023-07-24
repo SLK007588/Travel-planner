@@ -125,6 +125,160 @@
             Math.sin(dLng / 2) * Math.sin(dLng / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         const distance = R * c;
+        return distance;<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Planner Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .emoji {
+            font-size: 24px;
+        }
+
+        /* For smaller devices (up to 600px) */
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px auto;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 5px;
+            }
+            .emoji {
+                font-size: 16px;
+            }
+            table, tr {
+                display: block;
+            }
+            th, td {
+                display: inline-block;
+                width: 45%;
+                margin: 2.5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trip Planner Menu</h1>
+        <table>
+            <tr>
+                <th rowspan="2">Destination</th>
+                <th colspan="3">Travel Options</th>
+                <th rowspan="2">Time of Arrival</th>
+            </tr>
+            <tr>
+                <th>Flight</th>
+                <th>Train</th>
+                <th>Bus</th>
+            </tr>
+            <tr>
+                <td><a href="bangalore.html">Bangalore</a></td>
+                <td class="emoji">✈️</td>
+                <td class="emoji">🚆</td>
+                <td class="emoji">🚌</td>
+                <td id="bangalore-time">Calculating...</td>
+            </tr>
+            <tr>
+                <td><a href="mumbai.html">Mumbai</a></td>
+                <td class="emoji">✈️</td>
+                <td class="emoji">🚆</td>
+                <td class="emoji">🚌</td>
+                <td id="mumbai-time">Calculating...</td>
+            </tr>
+            <tr>
+                <td><a href="delhi.html">Delhi</a></td>
+                <td class="emoji">✈️</td>
+                <td class="emoji">🚆</td>
+                <td class="emoji">🚌</td>
+                <td id="delhi-time">Calculating...</td>
+            </tr>
+        </table>
+    </div>
+
+    
+         <script>
+        // Function to calculate the approximate time of arrival
+        function calculateTimeOfArrival(destination) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+
+                    const distance = calculateDistanceBetween(userLat, userLng, destination.lat, destination.lng);
+                    const travelSpeed = 60; // Assumed travel speed in km/h (you can adjust this value)
+                    const timeOfArrival = distance / travelSpeed;
+                    const hours = Math.floor(timeOfArrival);
+                    const minutes = Math.round((timeOfArrival - hours) * 60);
+                    const formattedTime = hours > 0 ? `${hours}h ${minutes}min` : `${minutes}min`;
+                    document.getElementById(destination.id + "-time").innerText = formattedTime;
+                }, error => {
+                    console.error("Error getting user location:", error);
+                    document.getElementById(destination.id + "-time").innerText = "N/A";
+                }, {
+                    enableHighAccuracy: false, // You can set this to true if you need high accuracy
+                    timeout: 5000, // Timeout after 5 seconds if location cannot be obtained
+                    maximumAge: 0 // Do not use a cached location
+                });
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+                document.getElementById(destination.id + "-time").innerText = "N/A";
+            }
+        }
+
+       function calculateDistanceBetween(lat1, lng1, lat2, lng2) {
+        const R = 6371; // Radius of the Earth in kilometers
+        const dLat = degToRad(lat2 - lat1);
+        const dLng = degToRad(lng2 - lng1);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2)) *
+            Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
         return distance;
     }
 function degToRad(deg) {
@@ -141,5 +295,6 @@ function degToRad(deg) {
         // Calculate and display time of arrival for each destination
         destinations.forEach(destination => calculateTimeOfArrival(destination));
     </script>
+    
 </body>
 </html>

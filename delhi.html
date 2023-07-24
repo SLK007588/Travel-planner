@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>delhi</title>
+    <title>Delhi</title>
     <style>
         body {
             background-image: url('delhi1.jpg');
@@ -19,8 +19,8 @@
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
-            padding: 50px;
+            margin: 50px auto;
+            padding: 20px;
             backdrop-filter: blur(5px);
             background-color: rgba(0, 0, 0, 0.5);
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
@@ -28,19 +28,19 @@
         }
 
         h1 {
-            font-size: 48px;
+            font-size: 32px;
             font-weight: bold;
             text-align: center;
             margin-bottom: 20px;
         }
 
         p {
-            font-size: 18px;
+            font-size: 16px;
             text-align: justify;
         }
 
         ul {
-            font-size: 20px;
+            font-size: 16px;
             list-style-type: none;
             padding: 0;
             margin: 0;
@@ -52,6 +52,19 @@
             display: inline-block;
             width: 1em;
             margin-left: -1em;
+        }
+
+        /* For smaller devices (up to 600px) */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+            p {
+                font-size: 14px;
+            }
+            ul {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
